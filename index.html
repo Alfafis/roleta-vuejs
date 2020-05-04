@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/png" sizes="32x32" href="https://vuejs.org/images/icons/favicon-32x32.png" />
+   <title>Roleta</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/velocity/1.0.0/velocity.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<style>
+   * {
+      background-color: #41b883;
+   }
+
+   h2 {
+      text-align: center;
+   }
+
+   ul {
+      border: 1px solid #000;
+      box-sizing: border-box;
+      height: 560px;
+      margin: 0 auto 2em;
+      overflow: hidden;
+      position: relative;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      border-radius: 100%;
+      width: 560px;
+   }
+
+   #app::before {
+      border-color: #ffffff transparent transparent transparent;
+      border-width: 32px 32px 0 32px;
+      border-style: solid;
+      position: absolute;
+      margin-left: -32px;
+      z-index: 100;
+      content: "";
+      height: 0;
+      left: 50%;
+      top: 60px;
+      width: 0;
+   }
+
+   ul li {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      -webkit-transform-origin: center bottom;
+      -moz-transform-origin: center bottom;
+      -ms-transform-origin: center bottom;
+      -o-transform-origin: center bottom;
+      transform-origin: center bottom;
+      width: 39.552238806%;
+      margin: 0 0 0 -106px;
+      position: absolute;
+      font-size: 1.2rem;
+      line-height: 18px;
+      list-style: none;
+      list-style: none;
+      font-size: 12px;
+      height: 50%;
+      padding: 0;
+      left: 50%;
+      top: 0;
+   }
+
+   ul li:nth-child(0) {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+   }
+
+   ul li:nth-child(1) {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+   }
+
+   ul li:nth-child(3) {
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      transform: rotate(90deg);
+   }
+
+   ul li:nth-child(4) {
+      -webkit-transform: rotate(135deg);
+      -moz-transform: rotate(135deg);
+      -ms-transform: rotate(135deg);
+      -o-transform: rotate(135deg);
+      transform: rotate(135deg);
+   }
+
+   ul li:nth-child(5) {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg);
+   }
+
+   ul li:nth-child(6) {
+      -webkit-transform: rotate(225deg);
+      -moz-transform: rotate(225deg);
+      -ms-transform: rotate(225deg);
+      -o-transform: rotate(225deg);
+      transform: rotate(225deg);
+   }
+
+   ul li:nth-child(7) {
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      transform: rotate(270deg);
+   }
+
+   ul li:nth-child(8) {
+      -webkit-transform: rotate(315deg);
+      -moz-transform: rotate(315deg);
+      -ms-transform: rotate(315deg);
+      -o-transform: rotate(315deg);
+      transform: rotate(315deg);
+   }
+
+   ul li a {
+      text-decoration: none;
+      position: absolute;
+      text-align: center;
+      font-size: 18px;
+      color: white;
+      width: 100%;
+      top: 48px;
+      left: 0;
+   }
+
+   #app {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+   }
+
+   #app>a {
+      -webkit-box-shadow: inset 0 -8px 0 #2b2b2b;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+      -moz-box-shadow: inset 0 -8px 0 #2b2b2b;
+      box-shadow: inset 0 -8px 0 #2b2b2b;
+      background-color: #404040;
+      border: 4px solid #ffffff;
+      -webkit-border-radius: 100%;
+      text-transform: uppercase;
+      -moz-border-radius: 100%;
+      text-decoration: none;
+      border-radius: 100%;
+      line-height: 6;
+      text-align: center;
+      position: absolute;
+      color: #fff;
+      height: 100px;
+      width: 100px;
+      padding: 0;
+   }
+</style>
+
+<body>
+   <h2>Roleta em Vue Js</h2>
+   <div id="app">
+      <ul class="whell">
+         <li v-for="premio in premios">
+            <a class="premiar fancybox">{{premio.nome}}</a>
+         </li>
+      </ul>
+      <a href=" #" id="roleta">Start</a>
+   </div>
+</body>
+<script>
+   var app = new Vue({
+      el: '#app',
+      data: {
+         roleta: '#',
+         premios: [{
+               nome: '10% desconto',
+               valor: '0,10'
+            }, {
+               nome: '20% desconto',
+               valor: '0,20'
+            }, {
+               nome: '30% desconto',
+               valor: '0,30'
+            }, {
+               nome: '40% desconto',
+               valor: '0,40'
+            }, {
+               nome: '50% desconto',
+               valor: '0,50'
+            }, {
+               nome: '60% desconto',
+               valor: '0,60'
+            },
+            {
+               nome: '70% desconto',
+               valor: '0,70'
+            },
+            {
+               nome: '80% desconto',
+               valor: '0,80'
+            }
+         ]
+      }
+   })
+
+   let liAlvo, grausGiro = 0
+
+   function ordSequential() {
+      return grausGiro = grausGiro + (45 * 3) + 1080
+   }
+   jQuery(document).ready(function ($) {
+      $("#roleta").on("click", function (e) {
+         ordSequential()
+         liAlvo = (grausGiro - (360 * parseInt(grausGiro / 360))) / 45
+         $(".premiar").parent("li").velocity({
+            opacity: 1
+         }, {
+            duration: 100,
+            complete: function () {
+               $("ul").velocity({
+                  rotateZ: "-" + grausGiro + "deg"
+               }, {
+                  duration: 3000,
+                  complete: function (elements) {
+                     $(".premiar").parent("li").eq(liAlvo).velocity({
+                        opacity: 0.4
+                     }, {
+                        duration: 100,
+                        complete: function () {
+                           $(".premiar").eq(liAlvo).trigger("click")
+                        }
+                     })
+                  }
+               })
+            }
+         })
+         return false
+      })
+      $(".premiar").fancybox({
+         maxWidth: "85%"
+      })
+   })
+</script>
+
+</html>
